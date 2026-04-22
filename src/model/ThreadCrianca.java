@@ -26,11 +26,28 @@ public class ThreadCrianca implements Runnable {
         this.painel = painel;
     }
 
-    // A tarefa CPU-bound que substitui o "dormir"
+    // A tarefa CPU-bound que agora atualiza o cronômetro visual
     private void esperaAtiva(long tempoMillis) {
         long inicio = System.currentTimeMillis();
+        long tempoRestanteAntigo = tempoMillis / 1000; // Converte para segundos
+
         while (System.currentTimeMillis() - inicio < tempoMillis) {
-            // Mantém o processador trabalhando pesado para simular o tempo no IFCE
+            // Continua trabalhando pesado (100% CPU), MAS agora calcula o tempo
+            long tempoDecorrido = System.currentTimeMillis() - inicio;
+            long segundosRestantes = (tempoMillis - tempoDecorrido) / 1000;
+
+            // Se o segundo mudou (ex: virou de 5 para 4), avisa o Painel de Animação!
+            if (segundosRestantes != tempoRestanteAntigo) {
+                if (painel != null) {
+                    painel.atualizarCronometroAvatar(this.id, segundosRestantes);
+                }
+                tempoRestanteAntigo = segundosRestantes;
+            }
+        }
+        
+        // Quando o while terminar, garante que a tela mostre 0s
+        if (painel != null) {
+            painel.atualizarCronometroAvatar(this.id, 0);
         }
     }
 
@@ -63,10 +80,17 @@ public void run() {
             esperaAtiva(2000); 
 
             // --- FASE 2: PEGAR BOLA (Bloqueio Passivo - CPU 0%) ---
-            avisarTela("Aguardando bola no cesto");
+            avisarTela("Aguardando bola na fila");
+            if(painel != null)
+                painel.onAvatarStatusChanged(this.id, "Fila");
+
             // Se não houver bolas, a linha abaixo PAUSA a thread no SO
             cesto.bolasDisponiveis.acquire(); 
             
+            if(painel != null)
+                painel.onAvatarStatusChanged(this.id, "Buscar");
+            esperaAtiva(1500);
+
             cesto.mutex.acquire(); 
             cesto.removerBola();
             atualizarInterface();
@@ -91,6 +115,12 @@ public void run() {
             cesto.mutex.release();
             cesto.bolasDisponiveis.release(); 
             temBola = false;
+
+            //A SOLUÇÃO: FASE 4.5 - CAMINHAR ATÉ O BANCO 
+           
+            avisarTela("Caminhando para o banco");
+            if (painel != null) painel.onAvatarStatusChanged(this.id, "INDO_DESCANSAR");
+            esperaAtiva(2000); // 2 segundos apenas para a viagem
 
             // --- FASE 5: DESCANSAR (Espera Ativa - CPU 100%) ---
             avisarTela("Descansando");
