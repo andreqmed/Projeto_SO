@@ -68,7 +68,6 @@ O principal ponto crítico do projeto é o **cesto**.
 
 ---
 
-## 📁 Estrutura do Projeto
 📦 projeto
  ┣ 📂 src
  ┃ ┣ 📂 model
@@ -83,10 +82,10 @@ O principal ponto crítico do projeto é o **cesto**.
  ┃ ┗ 📂 img
  ┃   ┣ 📄 Bola.png
  ┃   ┣ 📄 cesto_bola.png
- ┃   ┗ 📄 quadra.png
-     ┗ 📄 fbas_1body_human_00.png
-     ┗ 📄 fbas_03fot1_shoes_00a.png
-     ┗ 📄 fbas_05shrt_shortshirt_00a.png
+ ┃   ┣ 📄 quadra.png
+ ┃   ┣ 📄 fbas_1body_human_00.png
+ ┃   ┣ 📄 fbas_03fot1_shoes_00a.png
+ ┃   ┗ 📄 fbas_05shrt_shortshirt_00a.png
  
 ### 🔹 model
 Contém a lógica do sistema:
