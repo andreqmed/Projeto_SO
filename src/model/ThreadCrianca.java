@@ -32,6 +32,10 @@ public class ThreadCrianca implements Runnable {
         long tempoRestanteAntigo = tempoMillis / 1000; // Converte para segundos
 
         while (System.currentTimeMillis() - inicio < tempoMillis) {
+            
+            if (Thread.currentThread().isInterrupted()) {
+            return; 
+        }
             // Continua trabalhando pesado (100% CPU), MAS agora calcula o tempo
             long tempoDecorrido = System.currentTimeMillis() - inicio;
             long segundosRestantes = (tempoMillis - tempoDecorrido) / 1000;
@@ -71,7 +75,7 @@ public class ThreadCrianca implements Runnable {
 
 @Override
 public void run() {
-    while (true) {
+    while (!Thread.currentThread().isInterrupted()) {
         try {
             if(!this.temBola){
             // --- FASE 1: CAMINHAR ATÉ O CESTO (Espera Ativa - CPU 100%) ---
@@ -107,7 +111,14 @@ public void run() {
             avisarTela("Indo guardar a bola");
             if (painel != null) painel.onAvatarStatusChanged(this.id, "INDO_GUARDAR");
             esperaAtiva(2000);
-
+            if (cesto.espacosVazios.availablePermits() == 0) {
+                avisarTela("Esperando cesto esvaziar");
+                // Opcional: Se tiver um desenho dela parada esperando, acionar aqui:
+                if (painel != null) painel.onAvatarStatusChanged(this.id, "ESPERANDO_CESTO");
+            }
+            // A criança tenta pegar o espaço. Se estiver 0, ela congela AQUI, 
+            // logo após ter mandado a mensagem de "Esperando" para o seu log!
+            
             cesto.espacosVazios.acquire();
             cesto.mutex.acquire();
             cesto.adicionarBola();
