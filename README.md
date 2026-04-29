@@ -147,11 +147,12 @@ javac -d bin src/model/*.java src/view/*.java
 
 # executar (classe principal)
 java -cp bin view.Main
+```
 
 ```markdown
 > Execute a classe que contém o método `main`.
 
-'''
+```
 
 ---
 
