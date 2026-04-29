@@ -81,10 +81,12 @@ O principal ponto crítico do projeto é o **cesto**.
  ┃ ┃ ┗ 📄 PainelAnimacao.java
  ┃ ┃
  ┃ ┗ 📂 img
- ┃   ┣ 📄 sprite1.png
- ┃   ┣ 📄 sprite2.png
- ┃   ┗ 📄 ...
-
+ ┃   ┣ 📄 Bola.png
+ ┃   ┣ 📄 cesto_bola.png
+ ┃   ┗ 📄 quadra.png
+     ┗ 📄 fbas_1body_human_00.png
+     ┗ 📄 fbas_03fot1_shoes_00a.png
+     ┗ 📄 fbas_05shrt_shortshirt_00a.png
  
 ### 🔹 model
 Contém a lógica do sistema:
@@ -100,11 +102,13 @@ Responsável pela interface gráfica:
 - **PainelAnimacao.java** → animação das threads
 
 - ### 🔹 Img
-POssui as imagnes utilizadas na animação:
+  
+Psosui as imagnes utilizadas na animação:
+
 - Bola.png
--cesto_bola.png
--quadra.png
--spread sheets(Body, Shoes e Shirts)
+- cesto_bola.png
+- quadra.png
+- spread sheets(Body, Shoes e Shirts)
 
 ---
 
