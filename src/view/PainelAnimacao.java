@@ -3,8 +3,6 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -35,13 +33,13 @@ public PainelAnimacao() {
 
     // 1. CARREGAMENTO DAS IMAGENS
     try {
-        imgCesto = ImageIO.read(new File("img/cesto_bola.png"));
-        imgBola = ImageIO.read(new File("img/Bola.png")); 
-        imgFundo = ImageIO.read(new File("img/quadra.png"));
+        imgCesto = ImageIO.read(getClass().getResourceAsStream("/img/cesto_bola.png"));
+        imgBola = ImageIO.read(getClass().getResourceAsStream("/img/Bola.png")); 
+        imgFundo = ImageIO.read(getClass().getResourceAsStream("/img/quadra.png"));
         
-        sheetCorpo = ImageIO.read(new File("img/fbas_1body_human_00.png"));
-        sheetSapato = ImageIO.read(new File("img/fbas_03fot1_shoes_00a.png"));
-        sheetBlusa = ImageIO.read(new File("img/fbas_05shrt_shortshirt_00a.png"));
+        sheetCorpo = ImageIO.read(getClass().getResourceAsStream("/img/fbas_1body_human_00.png"));
+        sheetSapato = ImageIO.read(getClass().getResourceAsStream("/img/fbas_03fot1_shoes_00a.png"));
+        sheetBlusa = ImageIO.read(getClass().getResourceAsStream("/img/fbas_05shrt_shortshirt_00a.png"));
 
         imgParado = montarFrameVestiario(0, 2); 
         imgWalk1 = montarFrameVestiario(2, 4);   
@@ -50,10 +48,10 @@ public PainelAnimacao() {
         imgSentado = montarFrameVestiario(1, 2);
         imgCostas = montarFrameVestiario(0, 1);
         
-    } catch (IOException e) {
+    } catch (Exception e) {
         System.out.println("Erro ao carregar imagens! Verifique os nomes na pasta 'img'.");
+        e.printStackTrace(); // Adicionado para imprimir o erro exato no terminal caso falhe
     }
-
     // 2. O RELÓGIO (MOTOR DE PASSOS)
     timerAnimacao = new Timer(16, e -> {
         larguraTela = getWidth(); 
